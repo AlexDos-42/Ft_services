@@ -4,6 +4,16 @@ This project consist to clusturing an docker-compose application and deploy it w
 
 ![screen](https://github.com/AlexDos-42/Ft_services/blob/main/img_readme/Capture%20d%E2%80%99e%CC%81cran%202020-11-28%20a%CC%80%2018.50.24.png)
 
+## Containers
+
+- Nginx
+- FTPs
+- Grafana
+- InfluxDB
+- Wordpress
+- Mysql
+- phpMyAdmin
+
 ## Instructions
 
 This is the list of commands:
