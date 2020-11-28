@@ -42,7 +42,11 @@ To test the ftps server:
 		-> alesanto - password
 	put name-of-the-file
 	if error 500: use command pass
+	
+### Dashboard Kubernetes
 
 ![screen](https://github.com/AlexDos-42/Ft_services/blob/main/img_readme/Capture%20d%E2%80%99e%CC%81cran%202020-11-28%20a%CC%80%2018.49.47.png)
+
+### Dashboards Grafana
 
 ![screen](https://github.com/AlexDos-42/Ft_services/blob/main/img_readme/Capture%20d%E2%80%99e%CC%81cran%202020-11-28%20a%CC%80%2018.56.48.png)
