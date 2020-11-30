@@ -95,6 +95,7 @@ When the project is running, you can use:
 	kubectl get service
 	kubectl get deployment
 	kubectl get pods
+	kubectl delete -n default pod name-of-the-pod
 If ft_services is running, click on link bellow:
 	http://$MINI
 To test the ftps server:

@@ -2,7 +2,7 @@
 
 until mysql
 do
-	echo "NO_YET"
+	echo "NOT_YET"
 done
 
 mysql  < db.sql

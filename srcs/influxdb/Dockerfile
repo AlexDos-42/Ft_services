@@ -1,6 +1,7 @@
 FROM	alpine
 
-RUN		apk update && apk add openrc \
+RUN		apk update
+RUN		apk add openrc \
 		influxdb
 
 EXPOSE	8086

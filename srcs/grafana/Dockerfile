@@ -1,6 +1,7 @@
 FROM	alpine
 
-RUN		apk update && apk add openrc \
+RUN		apk update
+RUN		apk add openrc \
 		grafana --repository=http://dl-3.alpinelinux.org/alpine/edge/testing/
 
 COPY	srcs/grafana.sh ./
