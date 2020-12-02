@@ -12,6 +12,7 @@ COPY ./srcs/ .
 
 RUN chmod 777 ./doboth.sh
 RUN chmod 777 ./db.sh
+RUN chmod 777 ./db.sql
 RUN chmod 777 ./init.sh
 
 EXPOSE 3306

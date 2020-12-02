@@ -1,6 +1,6 @@
 if [ "$1" = "instal" ]
 then
-	echo "\e[92m\tInstal minikube properly\e[0m"
+	echo "\e[93m\tInstal minikube properly\e[0m"
  	curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
  	sudo install minikube-linux-amd64 /usr/local/bin/minikube
 	exit
@@ -17,7 +17,7 @@ fi
 
 if [ "$1" = "start" ] 
 then
-	echo "\e[92m►   Start minikube\e[0m"
+	echo "\e[93m►   Start minikube\e[0m"
 	minikube start --memory 2000 --vm-driver=docker --bootstrapper=kubeadm
 	minikube addons enable dashboard
 	minikube addons enable metrics-server
@@ -28,44 +28,42 @@ if [ "$1" = "services" ]
 then
 	eval $(minikube docker-env)
 
-	echo "\e[92m►   Instal metallb.\e[0m"
+	echo "\e[93m►   Instal metallb.\e[0m"
 	minikube addons enable metallb
 
 	export MINI=$(minikube ip | grep -oE "\b([0-9]{1,3}\.){3}\b")20
 
-	echo "\e[92m►   Replace IP in config-files.\e[0m"
-	cp srcs/wordpress/srcs/wp-config.php srcs/wordpress/srcs/tmp-wp-config.php
-	sed -i "s/IP/$MINI/g" srcs/wordpress/srcs/tmp-wp-config.php
+	echo "\e[93m►   Replace IP in config-files.\e[0m"
 	cp srcs/mysql/srcs/wordpress.sql.copy srcs/mysql/srcs/wordpress.sql
 	sed -i "s/MYIP/$MINI/g" srcs/mysql/srcs/wordpress.sql
 	cp srcs/nginx/srcs/index.html srcs/nginx/srcs/tmp-index.html
 	sed -i "s/IP/$MINI/g" srcs/nginx/srcs/tmp-index.html
 
-	echo "\e[92m►   Delete all services.\e[0m"
+	echo "\e[93m►   Delete all services.\e[0m"
 	kubectl delete deployments --all > /dev/null
 	kubectl delete services --all > /dev/null
 
 	kubectl apply -f srcs/metallb.yaml
 
-	echo "\e[92m►   Build Pods.\e[0m"
-	echo "\e[92mBuilding Nginx:\e[0m"
+	echo "\e[93m►   Build Pods.\e[0m"
+	echo "\e[93mBuilding Nginx:\e[92m"
 	docker build -t mynginx srcs/nginx/
-	echo "\e[92mBuilding ftps:\e[0m"
+	echo "\e[93mBuilding ftps:\e[32m"
 	docker build -t myftps srcs/ftps/ 
-	echo "\e[92mBuilding Grafana:\e[0m"
+	echo "\e[93mBuilding Grafana:\e[92m"
 	docker build -t mygrafana srcs/grafana/
-	echo "\e[92mBuilding mysql:\e[0m"
+	echo "\e[93mBuilding mysql:\e[32m"
 	docker build -t mymysql srcs/mysql/
-	echo "\e[92mBuilding wordpress:\e[0m"
+	echo "\e[93mBuilding wordpress:\e[92m"
 	docker build -t mywordpress srcs/wordpress/
-	echo "\e[92mBuilding phpmyadmin:\e[0m"
+	echo "\e[93mBuilding phpmyadmin:\e[32m"
 	docker build -t myphpmyadmin srcs/phpmyadmin/
-	echo "\e[92mBuilding influxdb:\e[0m"
+	echo "\e[93mBuilding influxdb:\e[92m"
 	docker build -t myinfluxdb srcs/influxdb/
-	echo "\e[92mBuilding telegraf:\e[0m"
+	echo "\e[93mBuilding telegraf:\e[32m"
 	docker build -t mytelegraf srcs/telegraf/
 
-	echo "\e[92m►   Deployment\e[0m"
+	echo "\e[93m►   Deployment\e[0m"
 	kubectl apply -f srcs/mynginx.yaml > /dev/null
 	kubectl apply -f srcs/myftps.yaml > /dev/null
 	kubectl apply -f srcs/mymysql.yaml > /dev/null
@@ -74,7 +72,7 @@ then
 	kubectl apply -f srcs/myinfluxdb.yaml > /dev/null
 	kubectl apply -f srcs/mytelegraf.yaml > /dev/null
 	kubectl apply -f srcs/mygrafana.yaml > /dev/null
-	echo "\e[92m►   FT_Services is running\e[0m"
+	echo "\e[93m►   FT_Services is running\e[0m"
 	echo "\e[94m\n►   Minicube ip: $MINI\e[0m"
 	exit
 fi
