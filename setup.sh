@@ -1,8 +1,9 @@
-if [ "$1" = "instal" ]
+if [ "$1" = "install" ]
 then
 	echo "\e[93m\tInstal minikube properly\e[0m"
  	curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
  	sudo install minikube-linux-amd64 /usr/local/bin/minikube
+	echo "\e[93mUse cmd : sudo usermod -aG docker $USER\e[0m"
 	exit
 fi
 
@@ -46,21 +47,21 @@ then
 	kubectl apply -f srcs/metallb.yaml
 
 	echo "\e[93m►   Build Pods.\e[0m"
-	echo "\e[93mBuilding Nginx:\e[92m"
+	echo "\e[93mBuilding Nginx:\e[0m"
 	docker build -t mynginx srcs/nginx/
-	echo "\e[93mBuilding ftps:\e[32m"
+	echo "\e[93mBuilding ftps:\e[0m"
 	docker build -t myftps srcs/ftps/ 
-	echo "\e[93mBuilding Grafana:\e[92m"
+	echo "\e[93mBuilding Grafana:\e[0m"
 	docker build -t mygrafana srcs/grafana/
-	echo "\e[93mBuilding mysql:\e[32m"
+	echo "\e[93mBuilding mysql:\e[0m"
 	docker build -t mymysql srcs/mysql/
-	echo "\e[93mBuilding wordpress:\e[92m"
+	echo "\e[93mBuilding wordpress:\e[0m"
 	docker build -t mywordpress srcs/wordpress/
-	echo "\e[93mBuilding phpmyadmin:\e[32m"
+	echo "\e[93mBuilding phpmyadmin:\e[0m"
 	docker build -t myphpmyadmin srcs/phpmyadmin/
-	echo "\e[93mBuilding influxdb:\e[92m"
+	echo "\e[93mBuilding influxdb:\e[0m"
 	docker build -t myinfluxdb srcs/influxdb/
-	echo "\e[93mBuilding telegraf:\e[32m"
+	echo "\e[93mBuilding telegraf:\e[0m"
 	docker build -t mytelegraf srcs/telegraf/
 
 	echo "\e[93m►   Deployment\e[0m"
@@ -81,7 +82,7 @@ export MINI=$(minikube ip | grep -oE "\b([0-9]{1,3}\.){3}\b")20
 echo "\e[93m►  --Welcome in FT_services a 42 Project--
 _____________________________________________
 This is the list of commands:
-	sh ${0} instal		Instal minikube
+	sh ${0} instal		Install minikube
 	sh ${0} start		Start minikube
 	sh ${0} services		Build services
 	sh ${0} clear		Stop and delete services
