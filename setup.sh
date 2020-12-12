@@ -19,7 +19,7 @@ fi
 if [ "$1" = "start" ] 
 then
 	echo "\e[93m►   Start minikube\e[0m"
-	minikube start --memory 2000 --vm-driver=docker --bootstrapper=kubeadm
+	minikube start --memory=2000mb --vm-driver=docker --bootstrapper=kubeadm
 	minikube addons enable dashboard
 	minikube addons enable metrics-server
 	exit
@@ -43,6 +43,10 @@ then
 	echo "\e[93m►   Replace IP in config-files.\e[0m"
 	cp srcs/mysql/srcs/wordpress.sql.copy srcs/mysql/srcs/wordpress.sql
 	sed -i "s/MYIP/$MINI/g" srcs/mysql/srcs/wordpress.sql
+	cp srcs/copy/metallb.yaml srcs/metallb.yaml
+	sed -i "s/MYIP/$MINI/g" srcs/metallb.yaml
+	cp srcs/copy/vsftpd.conf srcs/ftps/srcs/vsftpd.conf
+	sed -i "s/MYIP/$MINI/g" srcs/ftps/srcs/vsftpd.conf
 	cp srcs/nginx/srcs/index.html srcs/nginx/srcs/tmp-index.html
 	sed -i "s/IP/$MINI/g" srcs/nginx/srcs/tmp-index.html
 
@@ -98,7 +102,7 @@ When the project is running, you can use:
 If ft_services is running, click on link bellow:
 	http://$MINI
 To test the ftps server:
-	ftp 192.168.49.20 21		to acces ther server
+	ftp $MINI 21		to acces ther server
 		-> alesanto - password
 	put name-of-the-file
 	if error 500: use command pass
