@@ -1,6 +1,6 @@
 if [ "$1" = "install" ]
 then
-	echo "\e[93m\tInstal minikube properly\e[0m"
+	echo "\e[93m►   Instal minikube properly\e[0m"
  	curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
  	sudo install minikube-linux-amd64 /usr/local/bin/minikube
 	echo "\e[93mUse cmd : sudo usermod -aG docker $USER\e[0m"
@@ -32,6 +32,12 @@ then
 	echo "\e[93m►   Instal metallb.\e[0m"
 	minikube addons enable metallb
 
+	echo "\e[93m►   Delete all services.\e[0m"
+	kubectl delete deployments --all > /dev/null
+	kubectl delete services --all > /dev/null
+
+	kubectl apply -f srcs/metallb.yaml
+	
 	export MINI=$(minikube ip | grep -oE "\b([0-9]{1,3}\.){3}\b")20
 
 	echo "\e[93m►   Replace IP in config-files.\e[0m"
@@ -39,12 +45,6 @@ then
 	sed -i "s/MYIP/$MINI/g" srcs/mysql/srcs/wordpress.sql
 	cp srcs/nginx/srcs/index.html srcs/nginx/srcs/tmp-index.html
 	sed -i "s/IP/$MINI/g" srcs/nginx/srcs/tmp-index.html
-
-	echo "\e[93m►   Delete all services.\e[0m"
-	kubectl delete deployments --all > /dev/null
-	kubectl delete services --all > /dev/null
-
-	kubectl apply -f srcs/metallb.yaml
 
 	echo "\e[93m►   Build Pods.\e[0m"
 	echo "\e[93mBuilding Nginx:\e[0m"
