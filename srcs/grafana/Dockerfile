@@ -1,18 +1,21 @@
-FROM	alpine
+FROM	alpine:latest
 
 RUN		apk update
-RUN		apk add openrc \
-		grafana --repository=http://dl-3.alpinelinux.org/alpine/edge/testing/
-
+RUN		apk add openrc
+RUN		wget https://dl.grafana.com/oss/release/grafana-7.2.1.linux-amd64.tar.gz
+RUN		tar xzvf grafana-7.2.1.linux-amd64.tar.gz
+RUN     mv grafana-7.2.1 grafana
+RUN		rm grafana-7.2.1.linux-amd64.tar.gz
+RUN apk add --no-cache libc6-compat
 COPY	srcs/grafana.sh ./
 COPY	srcs/grafana.ini /usr/share/grafana/conf/custom.ini
-COPY	srcs/datasources.yaml /usr/share/grafana/conf/provisioning/datasources/influxdb.yaml
-COPY	srcs/dashboards.yaml /usr/share/grafana/conf/provisioning/dashboards/influxdb.yaml
+COPY	srcs/datasources.yaml /grafana/conf/provisioning/datasources/influxdb.yaml
+COPY	srcs/dashboards.yaml /grafana/conf/provisioning/dashboards/influxdb.yaml
 
 RUN		mkdir -p /var/lib/grafana_dashboards/
 
 COPY	srcs/dashboard.json /var/lib/grafana_dashboards/
 
 EXPOSE	3000
-
-CMD		[ "sh", "grafana.sh" ]
+CMD cd /grafana/bin ; \
+        ./grafana-server
