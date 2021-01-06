@@ -32,13 +32,9 @@ When the project is running, you can use:
 	kubectl get deployment
 	kubectl get pods
 
-If ft_services is running, go on link bellow:
-
-	http://192.168.49.20
-
 To test the ftps server:
 
-	ftp 192.168.49.20 21
+	ftp IP 21
 		-> alesanto - password
 	put name-of-the-file
 	if error 500: use command pass
