@@ -18,6 +18,6 @@ RUN		apk add glibc-2.28-r0.apk
 
 RUN		telegraf -sample-config telegraf.conf --input-filter cpu:mem --output-filter influxdb > telegraf.conf
 
-COPY	./srcs/telegraf.conf /etc/telegraf/
+COPY		./srcs/telegraf.conf /etc/telegraf/
 
 CMD		[ "telegraf" ]
